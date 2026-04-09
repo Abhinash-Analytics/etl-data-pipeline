@@ -1,0 +1,37 @@
+# ==========================================================
+# Data source CONFIGURATION
+# ==========================================================
+data_source:
+  input_path: ETL_Project/data/raw/Telco Customer Churn.csv
+
+# ==========================================================
+# Validation CONFIGURATION
+# ==========================================================
+validation:
+  threshold: 0.1
+  rules:
+    - column: tenure
+      condition: "< 0"
+
+    - column: MonthlyCharges
+      condition: "<= 0"
+
+    - column: TotalCharges
+      condition: "<= 0"
+      
+    - column: Churn
+      condition: "map:'Yes'= 1, 'No'= 0"
+  missing_values:  replace_with_nan: [" ", "", "NA", "null"]
+
+# ==========================================================
+# Output CONFIGURATION
+# ==========================================================
+output:
+  dropped_records: ETL_Project/data/dropped/dropped_records.csv
+  processed_data: ETL_Project/data/processed/processed_data.csv
+
+# ==========================================================
+# Logging CONFIGURATION
+# ==========================================================
+logging:
+  log_file: ETL_Project/log/pipeline.log
