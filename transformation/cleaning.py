@@ -7,13 +7,15 @@ from utils.config_loader import config
 _config = config()
 
 class HandleIntegerMissingValues(Correction):
-    def __init__(self, column):
+    def __init__(self, column, missing_values):
         self.column = column
+        self.missing_values = missing_values
 
     def apply(self, df):
         log.info(f"hangling missing interger data: {self.column}")
                 
-        df[self.column] = df[self.column].replace(_config['missing_values']['replace_with_nan'], np.nan)
+        #print ("------ Missing values: ", _config['validation'])
+        df[self.column] = df[self.column].replace(self.missing_values, np.nan)
         df[self.column] = pd.to_numeric(df[self.column], errors='coerce')
 
         return df

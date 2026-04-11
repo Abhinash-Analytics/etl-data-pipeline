@@ -2,6 +2,8 @@ import logging as log
 from utils.config_loader import config
 
 _config = config();
+#print("----------logger config", _config)
+print("----------logger----------")
 
 log.basicConfig(
     level=log.INFO,
@@ -9,5 +11,6 @@ log.basicConfig(
     handlers=[
         log.FileHandler(_config['logging']['log_file']),
         log.StreamHandler()
-    ]
+    ],
+    force=True
 )

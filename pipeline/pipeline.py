@@ -4,10 +4,11 @@ from utils.config_loader import config
 _config = config();
 
 class Pipeline:
-    def __init__(self, source, changes, validator):
+    def __init__(self, source, changes, validator, loader):
         self.source = source
         self.changes = changes
         self.validator = validator
+        self.loader = loader
 
     def run(self):
         log.info("Pipeline started")
@@ -18,7 +19,8 @@ class Pipeline:
             df = step.apply(df)
 
         df = self.validator.clean(df)
-
-        df.to_csv(_config['output']['processed_data'], index=False)
+        
+        self.loader.write(df)
 
         log.info("Pipeline completed successfully")
+        return df

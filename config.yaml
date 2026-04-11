@@ -2,13 +2,37 @@
 # Data source CONFIGURATION
 # ==========================================================
 data_source:
-  input_path: ETL_Project/data/raw/Telco Customer Churn.csv
+  - type: csv
+    input_path: data/raw/Telco Customer Churn.csv
 
+
+  # - type: db
+  #   user_name: ppstgres
+  #   passoword: root
+  #   host: localhost
+  #   port: 5432
+  #   query: SELECT * FROM telco_customer_churn
+
+# ==========================================================
+# Handle missing value CONFIGURATION
+# ==========================================================
+changes:
+  - type: HandleIntegerMissingValues
+    column: TotalCharges
+
+  - type: DropNull
+
+  - type: DropColumn
+    column: customerID
+
+  - type: Encoding
 # ==========================================================
 # Validation CONFIGURATION
 # ==========================================================
 validation:
   threshold: 0.1
+  missing_values:
+    replace_with_nan: [" ", "", "NA", "null"]
   rules:
     - column: tenure
       condition: "< 0"
@@ -20,18 +44,18 @@ validation:
       condition: "<= 0"
       
     - column: Churn
-      condition: "map:'Yes'= 1, 'No'= 0"
-  missing_values:  replace_with_nan: [" ", "", "NA", "null"]
+      condition: "map:Yes=1,No=0"
 
 # ==========================================================
 # Output CONFIGURATION
 # ==========================================================
 output:
-  dropped_records: ETL_Project/data/dropped/dropped_records.csv
-  processed_data: ETL_Project/data/processed/processed_data.csv
+  type: csv
+  path: data/processed/processed_data.csv
+  dropped_records: data/dropped/dropped_records.csv
 
 # ==========================================================
 # Logging CONFIGURATION
 # ==========================================================
 logging:
-  log_file: ETL_Project/log/pipeline.log
+  log_file: log/pipeline.log

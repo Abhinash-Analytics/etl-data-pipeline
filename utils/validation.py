@@ -16,7 +16,7 @@ def handleInvalidRows(df, condition, column, threshold, output_path):
         raise ValueError(f"{column}: data quality is too low")
     
     elif (invalid_rows_count != 0):
-        log.warning(f"{column}: Droping {invalid_rows_count} invalid rows ({ratio:.2%})")
+        log.warning(f"{column}: Dropping {invalid_rows_count} invalid rows ({ratio:.2%})")
         
         #Adding reason
         invalid_rows['dropped_reason'] = column
@@ -46,16 +46,16 @@ class Validation:
 
         if "<=" in condition_str:
             value = float(condition_str.split('<=')[1].strip())
-            return df[column] < value
+            return df[column] <= value
         elif ">=" in condition_str:
             value = float(condition_str.split('>=')[1].strip())
-            return df[column] > value
+            return df[column] >= value
         elif "<" in condition_str:
             value = float(condition_str.split('<')[1].strip())
-            return df[column] <= value
+            return df[column] < value
         elif ">" in condition_str:
             value = float(condition_str.split('>')[1].strip())
-            return df[column] >= value
+            return df[column] > value
         elif "==" in condition_str:
             value = float(condition_str.split('==')[1].strip())
             return df[column] == value
@@ -73,8 +73,8 @@ class Validation:
         df[column] = df[column].map(mapping).fillna(0)
 
         # Strict validation (no silent errors)
-        if df[column].isnull().any():
-            raise ValueError(f"Invalid values found in column '{column}' during mapping")
+        # if df[column].isnull().any():
+        #     raise ValueError(f"Invalid values found in column '{column}' during mapping")
         
         return df
 
