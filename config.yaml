@@ -5,25 +5,47 @@ data_source:
   - type: csv
     input_path: data/raw/Telco Customer Churn.csv
 
+  - type: db
+    db_name: postgres
+    user_name: postgres
+    password: root
+    host: localhost
+    port: 5432
+    query: SELECT * FROM telco_customer_churn
 
-  # - type: db
-  #   user_name: ppstgres
-  #   passoword: root
-  #   host: localhost
-  #   port: 5432
-  #   query: SELECT * FROM telco_customer_churn
+# ==========================================================
+# Output CONFIGURATION
+# ==========================================================
+output:
+  type: csv
+  path: data/processed/processed_data.csv
 
+  type: db
+  database:
+    db_name: postgres
+    user_name: postgres
+    password: root
+    host: localhost
+    port: 5432
+    table: processed_telco_customer_churn
+
+  dropped_records: data/dropped/dropped_records.csv
 # ==========================================================
 # Handle missing value CONFIGURATION
 # ==========================================================
 changes:
+  - type: StandardizeColumns
+
+  - type: ToNumeric
+    column: [tenure, monthlycharges, totalcharges]
+
   - type: HandleIntegerMissingValues
-    column: TotalCharges
+    column: totalcharges
 
   - type: DropNull
 
   - type: DropColumn
-    column: customerID
+    column: customerid
 
   - type: Encoding
 # ==========================================================
@@ -37,22 +59,14 @@ validation:
     - column: tenure
       condition: "< 0"
 
-    - column: MonthlyCharges
+    - column: monthlycharges
       condition: "<= 0"
 
-    - column: TotalCharges
+    - column: totalcharges
       condition: "<= 0"
       
-    - column: Churn
+    - column: churn
       condition: "map:Yes=1,No=0"
-
-# ==========================================================
-# Output CONFIGURATION
-# ==========================================================
-output:
-  type: csv
-  path: data/processed/processed_data.csv
-  dropped_records: data/dropped/dropped_records.csv
 
 # ==========================================================
 # Logging CONFIGURATION

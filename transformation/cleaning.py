@@ -14,7 +14,7 @@ class HandleIntegerMissingValues(Correction):
     def apply(self, df):
         log.info(f"hangling missing interger data: {self.column}")
                 
-        #print ("------ Missing values: ", _config['validation'])
+        print ("------ Missing values: ", df[self.column])
         df[self.column] = df[self.column].replace(self.missing_values, np.nan)
         df[self.column] = pd.to_numeric(df[self.column], errors='coerce')
 
@@ -25,6 +25,7 @@ class DropNull(Correction):
         log.info('Dropping NAN values')
         df = df.dropna()
 
+        print(f"Drop Null: {df.columns.tolist()}")
         return df
     
 class DropColumn(Correction):
@@ -36,6 +37,7 @@ class DropColumn(Correction):
         if self.column in df.columns:
             df = df.drop(columns=[self.column])
 
+        print(f"Drop Column: {df.columns.tolist()}")
         return df
     
 class Encoding(Correction):
@@ -43,6 +45,9 @@ class Encoding(Correction):
         log.info('apply encoding on objects')
 
         col_cat = df.select_dtypes(include = ['object', 'category']).columns
+
+        # Avoid encoding numeric like columns
+        col_cat = [col for col in col_cat if df[col].nunique() < 20]
 
         for col in col_cat:
             unique_val = df[col].nunique()
@@ -61,4 +66,5 @@ class Encoding(Correction):
         # for col in col_cat:
         #     print(f'{col}: ', df[col].unique())
 
+        print(f"encoding: {df.columns.tolist()}")
         return df

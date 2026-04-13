@@ -15,7 +15,7 @@ def main():
 
         source = SourceFactory.get_source(source_config)
 
-        transformation = TransformationFactory.build(_config['changes'], _config)
+        transformations = TransformationFactory.build(_config['changes'], _config)
 
         validator=Validation(
                 _config['validation']['rules'],
@@ -28,7 +28,7 @@ def main():
 
         pipeline = Pipeline(
             source = source,
-            changes = transformation,
+            changes = transformations,
             validator = validator,
             loader = loader
         )

@@ -1,4 +1,5 @@
 from .write_csv import WriteCSV
+from .write_db import WriteDB
 
 class LoadFactory:
 
@@ -8,6 +9,7 @@ class LoadFactory:
 
         if output_type == 'csv':
             return WriteCSV(config['output']['path'])
-        
+        elif output_type == 'db':
+            return WriteDB(config['output']['database'])
         else:
             raise ValueError(f"unsupported output type: {output_type}")

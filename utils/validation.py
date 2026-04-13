@@ -40,9 +40,12 @@ class Validation:
         self.output_path = output_path
 
     def _parse_condition(self, df, column, condition_str):
-        #Convert conditional string to actual panda condition
-        
+        print("##############Excuting parese condition#################")
+
+        #Convert conditional string to actual panda condition        
         condition_str = condition_str.strip()
+
+        print(f'datset before change {df.columns.tolist()}')
 
         if "<=" in condition_str:
             value = float(condition_str.split('<=')[1].strip())
