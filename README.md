@@ -92,4 +92,4 @@ This project showcases:
 ## 👨‍💻 Author
 
 **Abhinash Dora (Avi)**
-Aspiring Data Engineer | Python | SQL | Azure
+Aspiring Data Engineer | Python | SQL | Azure (Exposure)
