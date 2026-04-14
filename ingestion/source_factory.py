@@ -1,5 +1,6 @@
 from ingestion.read_csv import ReadCSV
 from ingestion.read_db import DatabaseSource
+from .read_json import ReadJson
 
 class SourceFactory:
 
@@ -22,5 +23,7 @@ class SourceFactory:
                 config['port'],
                 config['query']
             )
+        elif source_type == 'json':
+            return ReadJson(config['input_path'])
         else:
             raise ValueError(f"Unknown source type: {source_type}")

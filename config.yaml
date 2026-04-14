@@ -2,32 +2,38 @@
 # Data source CONFIGURATION
 # ==========================================================
 data_source:
-  - type: csv
-    input_path: data/raw/Telco Customer Churn.csv
+  # - type: csv
+  #   input_path: data/raw/Telco Customer Churn.csv
 
-  - type: db
-    db_name: postgres
-    user_name: postgres
-    password: root
-    host: localhost
-    port: 5432
-    query: SELECT * FROM telco_customer_churn
+  # - type: db
+  #   db_name: postgres
+  #   user_name: postgres
+  #   password: root
+  #   host: localhost
+  #   port: 5432
+  #   query: SELECT * FROM telco_customer_churn
+
+  - type: json
+    input_path: data/raw/telco_customer_churn.json
 
 # ==========================================================
 # Output CONFIGURATION
 # ==========================================================
 output:
-  type: csv
-  path: data/processed/processed_data.csv
+  # type: csv
+  # path: data/processed/processed_data.csv
 
-  type: db
-  database:
-    db_name: postgres
-    user_name: postgres
-    password: root
-    host: localhost
-    port: 5432
-    table: processed_telco_customer_churn
+  # type: db
+  # database:
+  #   db_name: postgres
+  #   user_name: postgres
+  #   password: root
+  #   host: localhost
+  #   port: 5432
+  #   table: processed_telco_customer_churn
+
+  type: json
+  path: data/processed/processed_telco_customer_churn.json
 
   dropped_records: data/dropped/dropped_records.csv
 # ==========================================================
