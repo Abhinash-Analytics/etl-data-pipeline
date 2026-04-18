@@ -15,14 +15,7 @@ class SourceFactory:
         if source_type == 'csv':
             return ReadCSV(config['input_path'])
         elif source_type == 'db':
-            return DatabaseSource(
-                config['db_name'],
-                config['user_name'],
-                config['password'],
-                config['host'],
-                config['port'],
-                config['query']
-            )
+            return DatabaseSource(config)
         elif source_type == 'json':
             return ReadJson(config['input_path'])
         else:

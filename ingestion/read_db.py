@@ -5,13 +5,13 @@ from utils.logger import log
 
 class DatabaseSource(DataSource):
 
-    def __init__(self, db_name, user_name, password, host, port, query):
-        self.db_name = db_name
-        self.user_name = user_name
-        self.password = password
-        self.host = host
-        self.port = port
-        self.query = query
+    def __init__(self, db_config):
+        self.db_name = db_config['db_name']
+        self.user_name = db_config['user_name']
+        self.password = db_config['password']
+        self.host = db_config['host']
+        self.port = db_config['port']
+        self.query = db_config['query']
 
     def read(self):
         log.info("Reading from Database")

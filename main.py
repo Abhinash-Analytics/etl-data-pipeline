@@ -12,6 +12,7 @@ def main():
     _config = config();
 
     for source_config in _config['data_source']:
+        log.info(f"initiating source_config :{source_config}")
 
         source = SourceFactory.get_source(source_config)
 
@@ -20,11 +21,11 @@ def main():
         validator=Validation(
                 _config['validation']['rules'],
                 _config['validation']['threshold'],
-                _config['output']['dropped_records']
+                _config['dropped_records']
             )
 
         # Load (Write output)
-        loader = LoadFactory.get_loader(_config)
+        loader = LoadFactory.get_loader(source_config)
 
         pipeline = Pipeline(
             source = source,

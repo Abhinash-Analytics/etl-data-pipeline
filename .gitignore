@@ -1,26 +1,35 @@
-# Python
+# Virtual Environment
+venv/
+.env/
+
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.venv/
-env/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
 
 # Logs
 *.log
 
-# OS
-.DS_Store
-Thumbs.db
-
 # VS Code
 .vscode/
 
-# Data (optional - if large files)
-data/processed/
+# OS files
+.DS_Store
+Thumbs.db
 
-__pycache__/
-*.pyc
-*.log
-.venv/
-env/
+# Jupyter Notebook checkpoints (if you use later)
+.ipynb_checkpoints/
+
+# Data files (optional - depends on your use case)
+# Uncomment if your data folder is large/sensitive
+# data/
+
+# Config secrets (if you store credentials later)
+*.env
+secrets.yaml
