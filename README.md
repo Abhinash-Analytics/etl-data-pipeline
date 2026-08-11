@@ -64,7 +64,6 @@ ETL_Project/
 ```bash
 git clone https://github.com/Abhinash-Analytics/etl-data-pipeline.git
 cd etl-data-pipeline
-pip install -r requirements.txt
 python main.py
 ```
 
